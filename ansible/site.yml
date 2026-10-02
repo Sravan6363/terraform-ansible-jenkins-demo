@@ -1,0 +1,36 @@
+---
+- name: Configure web server
+  hosts: web
+  become: true
+
+  tasks:
+
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: true
+
+    - name: Start and enable Nginx
+      service:
+        name: nginx
+        state: started
+        enabled: true
+
+    - name: Create custom web page
+      copy:
+        dest: /var/www/html/index.html
+        content: |
+          <!DOCTYPE html>
+          <html>
+          <head>
+              <title>Terraform + Ansible + Jenkins</title>
+          </head>
+          <body>
+              <h1>Hello from DevOps Automation!</h1>
+              <h2>Terraform + Ansible + Jenkins</h2>
+              <p>Infrastructure provisioned using Terraform.</p>
+              <p>Server configured using Ansible.</p>
+              <p>Automation orchestrated using Jenkins.</p>
+          </body>
+          </html>
